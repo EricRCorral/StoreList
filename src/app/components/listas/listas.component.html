@@ -1,0 +1,142 @@
+<div class="container flipInY2">
+
+    <div class="row justify-content-between pt-3 px-3" [ngClass]="{'alternate-theme': alternar}">
+
+        <h1>¡ Hola {{ nombreUsuario }} !</h1>
+
+        <button mat-mini-fab (click)='disconect()' color='accent'>
+    
+                    <i id="rotame" class="fas fa-sign-out-alt icons-size" ></i>
+    
+                </button>
+    </div>
+
+    <div *ngIf="!noCargando">
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 mb-4" *ngIf="noCargando">
+
+        <div class="row justify-content-around mb-3">
+
+            <div class="d-flex justify-content-center" (click)='downPend = !downPend' data-toggle='collapse' data-target='#pendientes'>
+
+                <i class="fas fa-clipboard-list fa-3x mx-2" [ngClass]="{'list-icon': downPend}"></i>
+
+                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternar}" [matBadge]='pendientesLength'></span>
+
+            </div>
+
+            <div [ngClass]="{'alternate-theme': alternar}">
+
+                <button mat-mini-fab (click)="crearLista()" color='primary'>
+                            
+                            <i class="fas fa-plus icons-size"></i>
+                            
+                        </button>
+            </div>
+
+            <div class="d-flex justify-content-center" (click)='downTer = !downTer' data-toggle='collapse' data-target='#terminadas'>
+
+
+                <i class="fas fa-clipboard-check fa-3x mx-2" [ngClass]="{'list-icon': downTer}"></i>
+
+                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternar}" [matBadge]='listas.length - pendientesLength'></span>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+
+                <div class="collapse" id="pendientes">
+
+                    <div *ngFor="let lista of listas; let i=index">
+
+                        <div *ngIf="!lista.terminada" class="d-flex justify-content-between align-items-center mx-0 my-3 ">
+
+                            <mat-checkbox class="pt-1" [(ngModel)]="lista.terminada" (change)='cambiarCheck(lista.listaId , lista.terminada)'></mat-checkbox>
+
+                            <div [ngClass]="{'check': lista.terminada}" (click)="abrirLista(i , lista.terminada)" class="mx-2"> {{ lista.title }}<i class="fas fa-tag ml-1" [ngStyle]="{'color': lista.tag}"></i></div>
+
+                            <div [ngClass]="{'alternate-theme': alternar}">
+
+                                <button mat-mini-fab color='primary' (click)='editarLista(i , lista)'>
+                
+                                            <i class="far fa-edit icons-size"></i>
+                
+                                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+
+                <div class="collapse" id="terminadas">
+
+                    <div *ngFor="let lista of listas; let i=index">
+
+                        <div class="d-flex justify-content-between align-items-center my-3 mx-0 " *ngIf="lista.terminada">
+
+                            <div class="pt-1" [ngClass]="{'alternate-theme': alternar}">
+
+                                <mat-checkbox [(ngModel)]="lista.terminada" (change)='cambiarCheck(lista.listaId , lista.terminada)'></mat-checkbox>
+
+                            </div>
+
+
+                            <div [@finished] [ngClass]="{'check': lista.terminada}" (click)="abrirLista(i , lista.terminada)" class="ml-2"> {{ lista.title }} <i class="fas fa-tag" [ngStyle]="{'color': lista.tag}"></i></div>
+
+                            <div [ngClass]="{'alternate-theme': alternar}">
+
+                                <button mat-mini-fab color='warn' (click)='borrarLista(i ,lista)'>
+            
+                                        <i class="fas fa-trash icons-size"></i>
+                                    
+                                    </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-3 text-center" [ngClass]="{'alternate-theme': alternar}">
+
+                        <button mat-mini-fab color='warn' (click)="borrarLista()">
+            
+                                <i class="fas fa-times-circle icons-size"></i>
+            
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalMap" tabindex="-1" role="dialog">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+
+                <google-map (mapClick)="ubicarMarcador($event)" [center]="center" width="100%" height="240px">
+
+                    <map-marker *ngIf="marcadorIndex !== undefined" [position]='marcadorIndex'>
+                    </map-marker>
+
+                </google-map>
+
+            </div>
+        </div>
+    </div>
+
+    <google-map *ngIf="noCargando" [center]="center" width="100%" height="240px">
+
+        <map-marker *ngFor="let lista of listas , let i=index" [position]="lista.latLng" [title]="lista.title" (mapClick)="abrirLista(i , lista.terminada)">
+        </map-marker>
+
+    </google-map>
+</div>

@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$todomaps-primary: mat-palette($mat-blue-grey, 600);
+$todomaps-accent: mat-palette($mat-blue-grey, 800);
+$todomaps-warn: mat-palette($mat-red, 900);
+$todomaps-theme: mat-light-theme($todomaps-primary, $todomaps-accent, $todomaps-warn);
+@include angular-material-theme($todomaps-theme);
+// Alternate theme
+.alternate-theme {
+    $alternate-primary: mat-palette($mat-yellow, 500);
+    $alternate-accent: mat-palette($mat-yellow, 700);
+    $alternate-warn: mat-palette($mat-amber, 900);
+    $alternate-theme: mat-dark-theme($alternate-primary, $alternate-accent, $alternate-warn);
+    @include angular-material-theme($alternate-theme);
+}

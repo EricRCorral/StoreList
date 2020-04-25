@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "todolistmaps-d435d"
+  },
+  "targets": {
+    "todolistmaps-d435d": {
+      "hosting": {
+        "todomaps": [
+          "todolistmaps-d435d"
+        ]
+      }
+    }
+  }
+}

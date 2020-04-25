@@ -1,0 +1,72 @@
+<div class="row justify-content-center bounceIn">
+
+    <img src="../../../assets/images/logo_transparent.png" class="logo">
+
+</div>
+
+<div class="fadeInUp">
+
+    <div class="row justify-content-center">
+
+        <form>
+
+            <mat-form-field color="accent">
+
+                <mat-label><i class="fas fa-user" style="color: black;"></i> Nombre</mat-label>
+
+                <input matInput type="text" name="Nombre" placeholder="Nombre" required #nombre>
+
+            </mat-form-field>
+
+            <div style="color: red;">{{ errorNombre }}</div>
+
+        </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <form>
+
+            <mat-form-field color="accent">
+
+                <mat-label><i class="fas fa-envelope" style="color: black;"></i> Email</mat-label>
+
+                <input matInput type="email" name="Email" placeholder="Email" required #email>
+
+            </mat-form-field>
+
+            <div style="color: red;">{{ errorEmail }}</div>
+
+        </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <form>
+
+            <mat-form-field color="accent">
+
+                <mat-label><i class="fas fa-key" style="color: black;"></i> Contraseña</mat-label>
+
+                <input #password matInput type="password" name="Password" placeholder="Contraseña" required minlength="6" (keyup.enter)="signUp(email.value, password.value, nombre.value)">
+
+            </mat-form-field>
+
+            <div style="color: red;">{{ errorPass }}</div>
+
+        </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <button mat-raised-button (click)='signUp(email.value, password.value, nombre.value)'>Crear</button>
+
+    </div>
+
+    <div class="row justify-content-center mt-3">
+
+        <a class="link" routerLink='/signIn'>¿ Ya tiene una cuenta ? Ingrese desde aquí</a>
+
+    </div>
+
+</div>

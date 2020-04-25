@@ -1,0 +1,103 @@
+<div class="container flipInY">
+
+    <div class="row align-items-center">
+
+        <div class="col-2">
+
+            <i class="fas fa-caret-left fa-2x" (click)="regresar()"></i>
+
+        </div>
+
+        <div class="col text-center">
+
+            <h2>{{ title }}</h2>
+
+        </div>
+
+        <div class="col-3 text-center" [ngClass]="{'alternate-theme': alternar}">
+
+            <button mat-mini-fab color='primary'>
+            <i class="fas fa-tag icons-size" [ngStyle]="{'color': tag}"></i>
+            </button>
+
+            <div class="d-flex justify-content-between mt-3">
+                <i class="fas fa-square" id="tag0" (click)="seleccionarTag('#ffffff')"></i>
+                <i class="fas fa-square mx-2" id="tag1" (click)="seleccionarTag('#c7c700b3')"></i>
+                <i class="fas fa-square" id="tag2" (click)="seleccionarTag('#ff0000b3')"></i>
+            </div>
+        </div>
+
+    </div>
+
+
+    <form class="d-flex justify-content-between">
+
+        <mat-form-field class="width-input">
+
+
+            <input class="input" autofocus matInput placeholder="Articulo" type="text" #nombre id="nombreText">
+
+        </mat-form-field>
+
+        <mat-form-field class="width-input">
+
+            <input class="input" matInput placeholder="Cantidad" type="number" #cantidad (keyup.enter)="agregarItem(nombre.value , cantidad.value , unidad.value)">
+
+        </mat-form-field>
+
+        <mat-form-field class="width-input">
+
+            <mat-label>Unidad</mat-label>
+
+            <mat-select #unidad>
+
+                <mat-option *ngFor="let unidad of unidades; let i=index" [value]='unidad'>
+                    {{ unidad }}
+                </mat-option>
+
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+
+    <div *ngIf="!noCargando">
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="noCargando">
+
+        <div class="row mb-3 mx-1 align-items-center justify-content-between" *ngFor="let item of items; let i=index">
+
+            <mat-checkbox name="Terminado" [(ngModel)]="item.terminado" (change)="editarItem(i , item , 2 )">
+            </mat-checkbox>
+
+            <div [ngClass]="{'check': item.terminado}" (click)='editarItem(i , item , 0)'>{{ item.nombre }}</div>
+
+            <div [ngClass]="{'check': item.terminado}" (click)='editarItem(i , item , 1)'>{{ item.cantidad }}{{ item.unidad }}</div>
+
+            <div *ngIf="item.terminado">
+
+                <div [ngClass]="{'alternate-theme': alternar}">
+
+                    <button mat-mini-fab color='warn' (click)='borrarItem(i ,item)'>
+    
+                            <i class="fas fa-trash icons-size"></i>
+                        
+                        </button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <google-map [center]="latLng" width="100%" height="240px">
+            <map-marker [position]="latLng" [title]="title">
+            </map-marker>
+        </google-map>
+
+    </div>
+</div>

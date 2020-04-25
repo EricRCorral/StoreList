@@ -1,0 +1,56 @@
+<div class="row justify-content-center bounceIn">
+
+    <img src="../../../assets/images/logo_transparent.png" class="logo">
+
+</div>
+
+<!-- PODRIA AGREGAR (SOLO POR JODER) UN MENSAJE COMO "FRASE DEL MOMENTO" QUE SE CARGARIA ACA O EN ALGUN LUGAR QUE QUEDE COPADO QUE DIGA ALGO COMO ¿LISTO PARA ARMAR TUS COMPRAS? O COSAS POR EL ESTILO Y VAN A VARIAR CON UN MATH.RANDOM O SINO PUEDO UTILIZAR LA FECHA Y DEPENDIENDO SI X VALOR ES MAYOR, MENOR O IGUAL A TANTO SE COLOCA TAL SINO OTRO Y ASI, PUEDO USAR UN SWITCH -->
+
+<div class="fadeInUp">
+
+    <div class="row justify-content-center">
+
+        <form>
+
+            <mat-form-field color="accent">
+
+                <mat-label><i class="fas fa-envelope" style="color: black;"></i> Email</mat-label>
+
+                <input matInput type="email" name="Email" placeholder="Email" required #email>
+
+            </mat-form-field>
+
+            <div style="color: red;">{{ errorEmail }}</div>
+
+        </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <form>
+
+            <mat-form-field color="accent">
+
+                <mat-label><i class="fas fa-key" style="color: black;"></i> Contraseña</mat-label>
+
+                <input matInput type="password" name="Password" placeholder="Contraseña" required minlength="6" #password (keyup.enter)="login(email.value , password.value)">
+
+            </mat-form-field>
+
+            <div style="color: red;">{{ errorPass }}</div>
+
+        </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <button mat-raised-button (click)='login(email.value, password.value)'>Entrar</button>
+
+    </div>
+
+    <div class="row justify-content-center mt-3">
+
+        <a class="link" routerLink='/signUp'>¿ No tiene una cuenta ? Cree una aquí</a>
+
+    </div>
+</div>
