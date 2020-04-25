@@ -13,6 +13,17 @@ import Swal from 'sweetalert2';
 .fa-sign-out-alt {
     transform: rotate(-90deg);
 }
+
+.fa-clipboard-check,
+.fa-clipboard-list {
+  opacity: .5;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.list-icon {
+    opacity: 1;
+}
   `],
   animations: [
 
@@ -31,6 +42,7 @@ import Swal from 'sweetalert2';
    ])
   ]
 })
+
 export class ListasComponent implements OnDestroy , DoCheck {
 
   alternar: boolean;
@@ -58,12 +70,14 @@ export class ListasComponent implements OnDestroy , DoCheck {
   constructor(private fireService: FirebaseService,
               private route: Router) {
 
-this.fireService.getUser().subscribe( (resp: any) => this.nombreUsuario = resp.users[0].providerUserInfo[0].displayName);
+this.fireService.getUser().subscribe(
+   (resp: any) => this.nombreUsuario = resp.users[0].providerUserInfo[0].displayName);
 
 // El ref se hace para ordenar las listas segun la fecha, por lo tanto la ultima lista creada o
 // modificada sera la primera visible.
 
-this.fireService.listas = this.fireService.firestore.collection(localStorage.getItem('id') , ref => ref.orderBy('date' , 'desc'));
+this.fireService.listas = this.fireService.firestore.collection(localStorage.getItem('id') , 
+ref => ref.orderBy('date' , 'desc'));
 
 // Obtener la data del Cloudstore e ingresarla en el arreglo listas, luego cambia el valor
 // del noCargando para mostrar las listas

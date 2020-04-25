@@ -136,92 +136,71 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        -webkit-transform: translate3d(0, 100%, 0);
         transform: translate3d(0, 100%, 0);
     }
     to {
         opacity: 1;
-        -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
 }
 
 .fadeInUp {
     animation-duration: 1s;
-    -webkit-animation-name: fadeInUp;
     animation-name: fadeInUp;
 }
 
 @keyframes flipInY {
     from {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
-        -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
         opacity: 0;
     }
     40% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
         transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
-        -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
     60% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
         opacity: 1;
     }
     80% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
         transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
     }
     to {
-        -webkit-transform: perspective(400px);
         transform: perspective(400px);
     }
 }
 
 .flipInY {
-    -webkit-backface-visibility: visible !important;
     backface-visibility: visible !important;
-    -webkit-animation-name: flipInY;
     animation-name: flipInY;
     animation-duration: 1s;
 }
 
 @keyframes flipInY2 {
     from {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
         transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
-        -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
         opacity: 0;
     }
     40% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
-        -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
     60% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
         transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
         opacity: 1;
     }
     80% {
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 5deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 5deg);
     }
     to {
-        -webkit-transform: perspective(400px);
         transform: perspective(400px);
     }
 }
 
 .flipInY2 {
-    -webkit-backface-visibility: visible !important;
     backface-visibility: visible !important;
-    -webkit-animation-name: flipInY2;
     animation-name: flipInY2;
     animation-duration: 1s;
 }
@@ -229,55 +208,16 @@
 
 /* /// Animate.css /// */
 
-.spinner-border {
-    margin-top: 30%;
-}
 
-.fa-caret-left {
-    opacity: .7;
-    transition: .5s;
-}
+/* All devices styles */
 
-.fa-caret-left:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    cursor: pointer;
-}
 
-.width-input {
-    width: 31%;
-}
-
-.fa-clipboard-check,
-.fa-clipboard-list {
-    opacity: .5;
-    transition: .5s;
-}
-
-.list-icon {
-    opacity: 1;
-}
-
-.check {
-    text-decoration-line: line-through;
-    color: rgba(140, 140, 140, 0.6);
-    cursor: not-allowed;
-}
+/* All components */
 
 html,
 body {
     overflow-x: hidden;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.logo {
-    width: 70%;
-    height: 30%;
-}
-
-.link {
-    text-decoration: none;
-    color: rgba(15, 15, 15);
 }
 
 .background {
@@ -295,6 +235,85 @@ body {
     color: #323232;
 }
 
+
+/* Lista and listas components */
+
+.spinner-border {
+    margin-top: 30%;
+}
+
+.check {
+    text-decoration-line: line-through;
+    color: rgba(140, 140, 140, 0.6);
+    cursor: not-allowed;
+}
+
 .icons-size {
     font-size: 20px;
+}
+
+.pointer {
+    cursor: pointer;
+    transition: .5s ease;
+}
+
+.pointer:hover {
+    transform: scale(1.1);
+}
+
+
+/* SignIn and SignUp components */
+
+.logo {
+    width: 70%;
+}
+
+.link {
+    text-decoration: none;
+    color: rgba(15, 15, 15);
+}
+
+.link:hover {
+    color: rgba(15, 15, 15);
+}
+
+
+/* 330 or less px devices */
+
+@media screen and (max-width: 330px) {
+    .sm-title {
+        font-size: 35px;
+    }
+}
+
+
+/* 768 to 1023px devices */
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .logo {
+        width: 35%;
+    }
+    .margin-crear {
+        margin-left: 19%;
+        margin-right: 19%;
+    }
+    .margin-nombre {
+        margin-left: 25%;
+    }
+}
+
+
+/* 1024px or more devices */
+
+@media screen and (min-width: 1024px) {
+    .logo {
+        width: 22%;
+    }
+    .margin-crear {
+        margin-left: 20.7%;
+        margin-right: 20.7%;
+    }
+    .margin-nombre {
+        margin-left: 25%;
+    }
 }

@@ -9,6 +9,21 @@ import Swal from 'sweetalert2';
   templateUrl: './lista.component.html',
   styles: [`
 
+.fa-caret-left {
+    opacity: .7;
+    transition: .5s;
+}
+
+.fa-caret-left:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.width-input {
+    width: 31%;
+}
+
 #tag0 {
     color: #ffffff;
     transition: .5s;
