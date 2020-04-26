@@ -1,5 +1,3 @@
-<!-- PODRIA AGREGAR ACA O EN ALGUN OTRO COMPONENTE DE ULTIMA, UN BOTON QUE SIRVA DE INFO, AL ACTIVARLO VA A PONER EN TRUE UN BOOLEAN Y ACTIVARIA VARIOS POPOVERS ( CREO QUE ASI SE LLAMAN) EN VARIOS ELEMENTOS DE TODA LA APP -->
-
 <div class="background" [ngClass]="{'background-theme-1': !alternar , 'background-theme-2': alternar ,  'fadeIn': alternar , 'fadeIn2': !alternar }">
 
     <mat-slide-toggle class="p-2" [checked]='alternar' (change)="cambiarTheme()" color='accent'></mat-slide-toggle>

@@ -70,6 +70,8 @@ export class ListasComponent implements OnDestroy , DoCheck {
   constructor(private fireService: FirebaseService,
               private route: Router) {
 
+// Obtener el nombre del usuario
+
 this.fireService.getUser().subscribe(
    (resp: any) => this.nombreUsuario = resp.users[0].providerUserInfo[0].displayName);
 
@@ -79,8 +81,8 @@ this.fireService.getUser().subscribe(
 this.fireService.listas = this.fireService.firestore.collection(localStorage.getItem('id') , 
 ref => ref.orderBy('date' , 'desc'));
 
-// Obtener la data del Cloudstore e ingresarla en el arreglo listas, luego cambia el valor
-// del noCargando para mostrar las listas
+// Obtener la data del Cloudstore e ingresarla en el arreglo listas, tambien asigna el valor de
+// pendientesLength para los badges luego cambia el valordel noCargando para mostrar las listas
 
 this.getDataSubscription = this.fireService.getData().subscribe( data => {
 
@@ -126,7 +128,7 @@ navigator.geolocation.getCurrentPosition(position => {
     this.alternar = this.fireService.alternarService;
   }
 
-  // Desuscripción del getData()
+  // Desuscripción del getData() y del setDocsIds()
 
   ngOnDestroy() {
 
@@ -272,10 +274,10 @@ navigator.geolocation.getCurrentPosition(position => {
 
       // Alternar entre lista terminada o pendiente
 
-      cambiarCheck(listaId: string , terminada: boolean) {
+  cambiarCheck(listaId: string , terminada: boolean) {
 
-        this.fireService.changeTerminado(listaId , terminada);
-      }
+      this.fireService.changeTerminado(listaId , terminada);
+    }
 
       // Abrir una lista, se hacen los setItem al localstorage para utilizarlos luego dentro de la
       // lista seleccionada
@@ -307,7 +309,7 @@ navigator.geolocation.getCurrentPosition(position => {
       // un splice lo que devuelve un nuevo length de las listas entonces para no "saltearse" una lista
       // es que se le resta una iteración al index.
 
-  borrarLista(i: number , data) {
+  borrarLista(i?: number , data?) {
 
     if (i === undefined) {
 

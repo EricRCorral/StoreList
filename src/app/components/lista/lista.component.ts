@@ -108,6 +108,9 @@ export class ListaComponent implements OnDestroy , DoCheck {
     this.alternar = this.fireService.alternarService;
   }
 
+   // Se borran items del localstorage para evitar posibles errores y se desubscribe del getItem() y del
+   // setDocItemsIds()
+
    ngOnDestroy() {
 
     localStorage.removeItem('tag');
@@ -119,14 +122,14 @@ export class ListaComponent implements OnDestroy , DoCheck {
     this.setDocItemsIdsSubscription.unsubscribe();
    }
 
-   // Regresar a las listas.
+   // Regresar a las listas
 
    regresar() {
 
      this.route.navigateByUrl(localStorage.getItem('id'));
    }
 
-   // Agregar un item y borrar los values de los inputs.
+   // Agregar un item y borrar los values de los inputs
 
    agregarItem(nombre: string , cantidad: number , unidad: string) {
 
@@ -244,7 +247,7 @@ export class ListaComponent implements OnDestroy , DoCheck {
    }
  }
 
-  // Seleccionar tag
+  // Seleccionar un tag
 
   seleccionarTag(tag: string) {
 

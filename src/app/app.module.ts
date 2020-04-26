@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 
-
 import * as bootstrap from 'bootstrap';
 import * as $ from 'jquery';
 import { environment } from '../environments/environment';

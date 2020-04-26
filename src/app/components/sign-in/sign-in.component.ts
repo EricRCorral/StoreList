@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { FirebaseService } from '../../services/firebase.service';
   templateUrl: './sign-in.component.html',
   styles: []
 })
-export class SignInComponent implements OnDestroy {
+export class SignInComponent   {
 
   errorEmail: string;
 
@@ -14,16 +14,12 @@ export class SignInComponent implements OnDestroy {
 
   constructor(private fireService: FirebaseService) {
 
-    // En caso de que el usuario este logeado, navege al mismo
+    // En caso de que el usuario este logeado, navegará al mismo
 
     if (localStorage.getItem('id')) {
 
       window.location.replace(localStorage.getItem('id'));
     }
-  }
-
-  ngOnDestroy() {
-
   }
 
   // Metodo para logearse con manejo de errores. Solo se muestra un error a la vez.

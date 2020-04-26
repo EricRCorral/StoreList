@@ -17,18 +17,21 @@
         <div class="col-3 text-center" [ngClass]="{'alternate-theme': alternar}">
 
             <button mat-mini-fab color='primary'>
+
             <i class="fas fa-tag icons-size" [ngStyle]="{'color': tag}"></i>
+
             </button>
 
             <div class="d-flex justify-content-between justify-content-md-center mt-3">
+
                 <i class="fas fa-square" id="tag0" (click)="seleccionarTag('#ffffff')"></i>
+
                 <i class="fas fa-square mx-2" id="tag1" (click)="seleccionarTag('#c7c700b3')"></i>
+
                 <i class="fas fa-square" id="tag2" (click)="seleccionarTag('#ff0000b3')"></i>
             </div>
         </div>
-
     </div>
-
 
     <form class="d-flex justify-content-between">
 
@@ -61,8 +64,11 @@
 
 
     <div *ngIf="!noCargando">
+
         <div class="text-center">
+
             <div class="spinner-border" role="status">
+
             </div>
         </div>
     </div>
@@ -88,16 +94,13 @@
                         
                         </button>
                 </div>
-
             </div>
-
-
         </div>
 
         <google-map [center]="latLng" width="100%">
-            <map-marker [position]="latLng" [title]="title">
-            </map-marker>
-        </google-map>
 
+            <map-marker [position]="latLng" [title]="title"></map-marker>
+
+        </google-map>
     </div>
 </div>

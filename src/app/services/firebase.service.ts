@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AngularFirestore , AngularFirestoreCollection } from '@angular/fire/firestore';
 import { ListaInterface } from '../interfaces/lista-interface';
 import { Item } from '../interfaces/item-interface';
-import 'firebase/firestore';
 import { Subscription } from 'rxjs';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +97,8 @@ export class FirebaseService {
 
     return this.http.post(`${this.url}signInWithPassword?key=${this.apiKey}` , usuario);
  }
+
+ // Manejo de errores para la creación y el ingreso de usuarios
 
  handleError(err) {
 
@@ -259,8 +261,8 @@ export class FirebaseService {
     return this.item.valueChanges();
   }
 
-  // Crear un item, los primeros 3 parametros se obtienen del lista.component, el itemId
-  // es un string vacio para evitar errores y el dateItem ya tiene un valor establecido.
+  // Crear un item, los primeros 3 parametros se obtienen del lista.component y el itemId
+  // es un string vacio para evitar errores
 
   setItem(
     nombre: string ,

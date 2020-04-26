@@ -12,8 +12,11 @@
     </div>
 
     <div *ngIf="!noCargando">
+
         <div class="text-center">
+
             <div class="spinner-border" role="status">
+
             </div>
         </div>
     </div>
@@ -50,6 +53,7 @@
         </div>
 
         <div class="row">
+
             <div class="col-6">
 
                 <div class="collapse" id="pendientes">
@@ -89,7 +93,6 @@
 
                             </div>
 
-
                             <div [@finished] [ngClass]="{'check': lista.terminada}" (click)="abrirLista(i , lista.terminada)"> {{ lista.title }} <i class="fas fa-tag" [ngStyle]="{'color': lista.tag}"> </i></div>
 
                             <div [ngClass]="{'alternate-theme': alternar}">
@@ -124,11 +127,9 @@
 
                 <google-map (mapClick)="ubicarMarcador($event)" [center]="center" width="100%">
 
-                    <map-marker *ngIf="marcadorIndex !== undefined" [position]='marcadorIndex'>
-                    </map-marker>
+                    <map-marker *ngIf="marcadorIndex !== undefined" [position]='marcadorIndex'></map-marker>
 
                 </google-map>
-
             </div>
         </div>
     </div>
