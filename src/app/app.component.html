@@ -1,6 +1,123 @@
 <div class="background" [ngClass]="{'background-theme-1': !alternar , 'background-theme-2': alternar ,  'fadeIn': alternar , 'fadeIn2': !alternar }">
 
-    <mat-slide-toggle class="p-2" [checked]='alternar' (change)="cambiarTheme()" color='accent'></mat-slide-toggle>
+    <div class="row justify-content-between px-4 pt-1" [ngClass]="{'alternate-theme': alternar}">
+
+        <mat-slide-toggle class="p-2" [checked]='alternar' (change)="cambiarTheme()" color='accent'></mat-slide-toggle>
+
+        <button type="button" mat-mini-fab data-toggle="modal" data-target="#info">
+            <i class="fas fa-info"></i>
+        </button>
+
+    </div>
+
+    <div class="modal fade" style="font-size: 20px;" id="info">
+
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content bg-light" [ngClass]="{'bg-dark': !alternar}">
+
+                <div class="modal-header align-self-center">
+
+                    <h3 class="modal-title">¡Bienvenid@ a StoreList!</h3>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <h4>¿Para que es esta app?</h4>
+
+                    <p>
+                        Para organizar sus compras.
+                    </p>
+
+                    <h4>¿Como se utiliza?</h4>
+
+                    <p>
+                        Luego de ingresar con su cuenta, siga los siguientes pasos:
+                    </p>
+
+                    <ul class="text-left">
+
+                        <li [ngClass]="{'alternate-theme': alternar}">Toque el boton
+                            <button mat-mini-fab class="px-1" color='primary'><i class="fas fa-plus icons-size"></i></button> para crear una lista de un local.
+                        </li>
+
+                        <li class="my-2">Ingrese el nombre del local.</li>
+
+                        <li>Seleccione la ubicación del mismo.</li>
+
+                        <li class="my-2">Dentro de la lista podrá colocar el nombre del articulo, la cantidad y unidad. Para insertarlo toque enter dentro de la entrada de la cantidad.</li>
+
+                        <li>Para modificar el nombre o la cantidad toque encima de alguno de ellos.</li>
+
+                        <li class="my-2">Para borrar un articulo toque
+                            <mat-checkbox class="px-1"></mat-checkbox> y luego
+                            <button mat-mini-fab color="warn" class="px-1"><i class="fas fa-trash icons-size"></i></button>.
+                        </li>
+
+                        <li [ngClass]="{'alternate-theme': alternar}">Los cuadrados debajo del
+                            <button mat-mini-fab class="px-1" color='primary'><i class="fas fa-tag icons-size"></i></button> son para seleccionar una etiqueta de la lista, podría usarse para las listas de mayor prioridad.
+                        </li>
+
+                        <li class="my-2">Toque el <i class="fas fa-caret-left px-1"></i> para regresar a las listas.</li>
+                    </ul>
+
+                    <ul class="text-left">
+
+                        <h5>¿Estas en el menu de las listas? Genial, podés hacer lo siguiente:</h5>
+
+                        <li>Toca
+                            <i class="fas fa-clipboard-list icons-size px-1"></i> para ver las listas pendientes o
+                            <i class="fas fa-clipboard-check icons-size px-1"></i> para las listas terminadas.
+                        </li>
+
+                        <li class="my-2">Para acceder toca su nombre dentro de las listas pendientes o tambien puede acceder a ella seleccionando su marcador en el mapa.</li>
+
+                        <li [ngClass]="{'alternate-theme': alternar}">
+                            Para editar el nombre y ubicacióntoca el
+                            <button mat-mini-fab class="pl-1" color='primary'><i class="far fa-edit icons-size"></i></button>.
+                        </li>
+
+                        <li class="my-3">
+                            Para borrar toque
+                            <mat-checkbox class="px-1"></mat-checkbox> y luego en las listas terminadas
+                            <button mat-mini-fab color="warn" class="px-1"><i class="fas fa-trash icons-size"></i></button>. En caso de querer borrar todas las listas terminadas utilice el
+                            <button mat-mini-fab color="warn"><i class="fas fa-times-circle icons-size"></i></button>.
+                        </li>
+
+                        <li [ngClass]="{'alternate-theme': alternar}">Toque
+                            <button mat-mini-fab color='accent'>
+                                <i class="fas fa-sign-out-alt icons-size" ></i>
+                            </button> para cerrar sesion.
+                        </li>
+
+                    </ul>
+
+                    <h5 class="px-2">Puede alternar los colores de la app tocando
+                        <mat-slide-toggle color='accent'></mat-slide-toggle>.
+                    </h5>
+
+                    <div class="my-3" style="color: rgb(13, 0, 85);">
+                        <a class="text-reset" href="https://github.com/EricRCorral/StoreList" target="_blank" rel="noopener noreferrer"><i class="fab fa-github-alt fa-2x"></i></a>
+                    </div>
+
+                    <code style="color: rgb(13, 0, 85);">
+                        Con 
+                        <i class="fas fa-heart"></i>
+                        &
+                        <i class="fas fa-code"></i>
+                         por Eric Corral</code>
+
+                </div>
+
+                <div class="modal-footer align-self-center">
+
+                    <button type="button" mat-raised-button data-dismiss="modal">Entendido!</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <router-outlet></router-outlet>
 </div>

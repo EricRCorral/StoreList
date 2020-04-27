@@ -4,7 +4,12 @@ import { FirebaseService } from './services/firebase.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styles: [`
+  .fa-sign-out-alt {
+    transform: rotate(-90deg);
+}
+  `
+  ]
 })
 export class AppComponent {
 
