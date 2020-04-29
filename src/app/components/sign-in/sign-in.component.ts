@@ -8,9 +8,9 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class SignInComponent   {
 
-  errorEmail: string;
+  emailErrorMessage: string;
 
-  errorPass: string;
+  passwordErrorMessage: string;
 
   constructor(private fireService: FirebaseService) {
 
@@ -40,9 +40,9 @@ export class SignInComponent   {
 
       this.fireService.handleError(err);
 
-      this.errorEmail = this.fireService.errorEmail;
+      this.emailErrorMessage = this.fireService.emailError;
 
-      this.errorPass = this.fireService.errorPass;
+      this.passwordErrorMessage = this.fireService.passwordError;
     }
   );
  }

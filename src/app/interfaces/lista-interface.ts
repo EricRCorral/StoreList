@@ -1,8 +1,8 @@
 export interface ListaInterface {
     title: string;
     latLng: Geolocation;
-    listaId: string;
+    listId: string;
     date: number;
-    terminada: boolean;
-    prioridad?: string;
+    finished: boolean;
+    tag?: string;
 }

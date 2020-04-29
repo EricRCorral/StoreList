@@ -14,11 +14,11 @@
 
                 <mat-label><i class="fas fa-user" style="color: black;"></i> Nombre</mat-label>
 
-                <input matInput type="text" name="Nombre" placeholder="Nombre" required #nombre>
+                <input matInput type="text" name="Nombre" placeholder="Nombre" required #name>
 
             </mat-form-field>
 
-            <div style="color: red;">{{ errorNombre }}</div>
+            <div style="color: red;">{{ nameErrorMessage }}</div>
 
         </form>
     </div>
@@ -35,7 +35,7 @@
 
             </mat-form-field>
 
-            <div style="color: red;">{{ errorEmail }}</div>
+            <div style="color: red;">{{ emailErrorMessage }}</div>
 
         </form>
     </div>
@@ -48,18 +48,18 @@
 
                 <mat-label><i class="fas fa-key" style="color: black;"></i> Contraseña</mat-label>
 
-                <input #password matInput type="password" name="Password" placeholder="Contraseña" required minlength="6" (keyup.enter)="signUp(email.value, password.value, nombre.value)">
+                <input #password matInput type="password" name="Password" placeholder="Contraseña" required minlength="6" (keyup.enter)="signUp(email.value, password.value, name.value)">
 
             </mat-form-field>
 
-            <div style="color: red;">{{ errorPass }}</div>
+            <div style="color: red;">{{ passwordErrorMessage }}</div>
 
         </form>
     </div>
 
     <div class="row justify-content-center">
 
-        <button mat-raised-button (click)='signUp(email.value, password.value, nombre.value)'>Crear</button>
+        <button mat-raised-button (click)='signUp(email.value, password.value, name.value)'>Crear</button>
 
     </div>
 

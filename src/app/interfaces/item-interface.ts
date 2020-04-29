@@ -1,8 +1,8 @@
 export interface Item {
     itemId: string;
-    nombre: string;
-    cantidad: number;
+    name: string;
+    quantity: number;
     dateItem: number;
-    unidad: string;
-    terminado: boolean;
+    unity: string;
+    finished: boolean;
 }

@@ -53,9 +53,9 @@ import Swal from 'sweetalert2';
 })
 export class ListaComponent implements OnDestroy , DoCheck {
 
-  noCargando = true;
+  noLoading = true;
 
-  alternar: boolean;
+  alternate: boolean;
 
   items = [];
 
@@ -69,22 +69,22 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
   setDocItemsIdsSubscription: Subscription;
 
-  unidades = ['u' , 'doc' , 'oz' , 'mg' , 'gr' , 'kg' , 'ml' , 'cl' , 'lt'];
+  unities = ['u' , 'doc' , 'oz' , 'mg' , 'gr' , 'kg' , 'ml' , 'cl' , 'lt'];
 
   constructor(private fireService: FirebaseService,
               private route: Router) {
 
-    this.noCargando = false;
+    this.noLoading = false;
 
     this.tag = localStorage.getItem('tag');
 
     // El ref se hace para ordenar los items segun la fecha, por lo tanto el ultimo item creada o
     // modificada sera el primero visible.
 
-    this.fireService.item = this.fireService.firestore.collection(localStorage.getItem('id') , ref => ref.orderBy('date' , 'desc')).doc(localStorage.getItem('listaId')).collection('lista' , ref => ref.orderBy('dateItem' , 'desc'));
+    this.fireService.item = this.fireService.firestore.collection(localStorage.getItem('id') , ref => ref.orderBy('date' , 'desc')).doc(localStorage.getItem('listId')).collection('list' , ref => ref.orderBy('dateItem' , 'desc'));
 
     // Obtener la data del Cloudstore e ingresarla en el arreglo items, luego cambia el
-    // valor del noCargando para mostrar los items.
+    // valor del noLoading para mostrar los items.
 
     this.itemsSubscription = this.fireService.getItems().subscribe( data => {
 
@@ -92,7 +92,7 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
       this.items = this.items[0];
 
-      this.noCargando = true;
+      this.noLoading = true;
      });
 
     // Ingresar el id dentro del item correspodiente, dentro del metodo ya
@@ -101,11 +101,11 @@ export class ListaComponent implements OnDestroy , DoCheck {
     this.setDocItemsIdsSubscription = this.fireService.setDocItemsIds();
    }
 
-   // Cambia la propiedad alternar para el theme del Angular Material
+   // Cambia la propiedad alternate para el theme del Angular Material
 
   ngDoCheck() {
 
-    this.alternar = this.fireService.alternarService;
+    this.alternate = this.fireService.alternateService;
   }
 
    // Se borran items del localstorage para evitar posibles errores y se desubscribe del getItem() y del
@@ -124,51 +124,51 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
    // Regresar a las listas
 
-   regresar() {
+   back() {
 
      this.route.navigateByUrl(localStorage.getItem('id'));
    }
 
    // Agregar un item y borrar los values de los inputs
 
-   agregarItem(nombre: string , cantidad: number , unidad: string) {
+   createItem(name: string , quantity: number , unity: string) {
 
-    if (nombre.length > 0  && cantidad > 0) {
+    if (name.length > 0  && quantity > 0) {
 
-      this.fireService.setItem( nombre , cantidad , unidad);
+      this.fireService.setItem( name , quantity , unity);
 
       $('.input').val('');
 
-      $('#nombreText').focus();
+      $('#nameText').focus();
     }
    }
 
    // Editar un item
 
-   editarItem(i: number, data: any , condicion: number) {
+   editItem(i: number, data: any , condition: number) {
 
     let dateItem: number = new Date().getTime();
 
     const itemId: string = data.itemId;
 
-    const nombreData: string = data.nombre;
+    const nameData: string = data.name;
 
-    const cantidadData: number = data.cantidad;
+    const quantityData: number = data.quantity;
 
-    const terminadoData: boolean = data.terminado;
+    const finishedData: boolean = data.finished;
 
-     // Editar el nombre , si el item esta marcado como terminado no se ejecutara.
+     // Editar el nombre , si el item esta marcado como finished no se ejecutara.
 
-    if (condicion === 0) {
+    if (condition === 0) {
 
-      if (data.terminado) {
+      if (data.finished) {
         return;
       }
 
       Swal.fire ({
-        title: `Editar ${data.nombre}`,
+        title: `Editar ${data.name}`,
         input: 'text',
-        inputValue: data.nombre,
+        inputValue: data.name,
         inputPlaceholder: 'Ingrese el nuevo nombre...',
         showCancelButton: true,
         confirmButtonText: 'Guardar nombre',
@@ -182,13 +182,13 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
          if (resp.value !== undefined) {
 
-           const nombre: string = resp.value;
+           const name: string = resp.value;
 
-           this.fireService.editItem(itemId , dateItem , nombre , cantidadData , terminadoData);
+           this.fireService.editItem(itemId , dateItem , name , quantityData , finishedData);
 
            this.items.splice(
              i, 1 ,
-            {nombre,
+            {name,
              dateItem
             });
          }
@@ -196,18 +196,18 @@ export class ListaComponent implements OnDestroy , DoCheck {
       );
     }
 
-    // Editar la cantidad , si el item esta marcado como terminado no se ejecutara.
+    // Editar la cantidad , si el item esta marcado como finished no se ejecutara.
 
-    if (condicion === 1) {
+    if (condition === 1) {
 
-      if (data.terminado) {
+      if (data.finished) {
         return;
       }
 
       Swal.fire ({
-        title: `Cantidad de ${data.nombre}`,
+        title: `Cantidad de ${data.name}`,
         input: 'number',
-        inputValue: data.cantidad,
+        inputValue: data.quantity,
         inputPlaceholder: 'Ingrese la nueva cantidad...',
         showCancelButton: true,
         confirmButtonText: 'Guardar cantidad',
@@ -220,36 +220,36 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
          if (resp.value !== undefined) {
 
-           const cantidad: number = resp.value;
+           const quantity: number = resp.value;
 
-           this.fireService.editItem(itemId , dateItem, nombreData , cantidad , terminadoData);
+           this.fireService.editItem(itemId , dateItem, nameData , quantity , finishedData);
 
            this.items.splice(
              i, 1 ,
             {dateItem,
-             cantidad,
+             quantity,
             });
          }
        }
        );
     }
 
-    // Cambiar a terminado/pendiente. La segunda condicion es para colocar al final de la lista en caso de estar terminado
+    // Cambiar a finished/pending. La segunda condition es para colocar al final de la lista en caso de estar finished
 
-    if (condicion === 2) {
+    if (condition === 2) {
 
-      if (data.terminado) {
+      if (data.finished) {
 
         dateItem = - dateItem;
       }
 
-      this.fireService.editItem(itemId , dateItem , nombreData , cantidadData , data.terminado);
+      this.fireService.editItem(itemId , dateItem , nameData , quantityData , data.finished);
    }
  }
 
   // Seleccionar un tag
 
-  seleccionarTag(tag: string) {
+  selectTag(tag: string) {
 
     this.fireService.editTag(tag);
 
@@ -260,10 +260,10 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
   // Borrar un item
 
-  borrarItem(i: number , data) {
+  delItem(i: number , data) {
 
     Swal.fire({
-      title: `¿ Seguro que desea borrar ${data.nombre} ?`,
+      title: `¿ Seguro que desea borrar ${data.name} ?`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Borrar',
@@ -275,7 +275,7 @@ export class ListaComponent implements OnDestroy , DoCheck {
 
       if (resp.value === true) {
 
-        this.fireService.borrarItem(data.itemId);
+        this.fireService.deleteItem(data.itemId);
 
         this.items.splice(i , 1);
       }

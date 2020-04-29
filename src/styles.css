@@ -293,12 +293,9 @@ body {
     .logo {
         width: 35%;
     }
-    .margin-crear {
+    .margin-create {
         margin-left: 19%;
         margin-right: 19%;
-    }
-    .margin-nombre {
-        margin-left: 25%;
     }
 }
 
@@ -309,11 +306,8 @@ body {
     .logo {
         width: 22%;
     }
-    .margin-crear {
+    .margin-create {
         margin-left: 20.7%;
         margin-right: 20.7%;
-    }
-    .margin-nombre {
-        margin-left: 25%;
     }
 }

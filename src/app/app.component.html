@@ -1,8 +1,8 @@
-<div class="background" [ngClass]="{'background-theme-1': !alternar , 'background-theme-2': alternar ,  'fadeIn': alternar , 'fadeIn2': !alternar }">
+<div class="background" [ngClass]="{'background-theme-1': !alternate , 'background-theme-2': alternate ,  'fadeIn': alternate , 'fadeIn2': !alternate }">
 
-    <div class="row justify-content-between px-4 pt-1" [ngClass]="{'alternate-theme': alternar}">
+    <div class="row justify-content-between px-4 pt-1" [ngClass]="{'alternate-theme': alternate}">
 
-        <mat-slide-toggle class="p-2" [checked]='alternar' (change)="cambiarTheme()" color='accent'></mat-slide-toggle>
+        <mat-slide-toggle class="p-2" [checked]='alternate' (change)="changeTheme()" color='accent'></mat-slide-toggle>
 
         <button type="button" mat-mini-fab data-toggle="modal" data-target="#info">
             <i class="fas fa-info"></i>
@@ -14,7 +14,7 @@
 
         <div class="modal-dialog" role="document">
 
-            <div class="modal-content bg-light" [ngClass]="{'bg-dark': !alternar}">
+            <div class="modal-content bg-light" [ngClass]="{'bg-dark': !alternate}">
 
                 <div class="modal-header align-self-center">
 
@@ -38,7 +38,7 @@
 
                     <ul class="text-left">
 
-                        <li [ngClass]="{'alternate-theme': alternar}">Toque el boton
+                        <li [ngClass]="{'alternate-theme': alternate}">Toque el boton
                             <button mat-mini-fab class="px-1" color='primary'><i class="fas fa-plus icons-size"></i></button> para crear una lista de un local.
                         </li>
 
@@ -55,7 +55,7 @@
                             <button mat-mini-fab color="warn" class="px-1"><i class="fas fa-trash icons-size"></i></button>.
                         </li>
 
-                        <li [ngClass]="{'alternate-theme': alternar}">Los cuadrados debajo del
+                        <li [ngClass]="{'alternate-theme': alternate}">Los cuadrados debajo del
                             <button mat-mini-fab class="px-1" color='primary'><i class="fas fa-tag icons-size"></i></button> son para seleccionar una etiqueta de la lista, podría usarse para las listas de mayor prioridad.
                         </li>
 
@@ -73,7 +73,7 @@
 
                         <li class="my-2">Para acceder toca su nombre dentro de las listas pendientes o tambien puede acceder a ella seleccionando su marcador en el mapa.</li>
 
-                        <li [ngClass]="{'alternate-theme': alternar}">
+                        <li [ngClass]="{'alternate-theme': alternate}">
                             Para editar el nombre y ubicacióntoca el
                             <button mat-mini-fab class="pl-1" color='primary'><i class="far fa-edit icons-size"></i></button>.
                         </li>
@@ -85,7 +85,7 @@
                             <button mat-mini-fab color="warn"><i class="fas fa-times-circle icons-size"></i></button>.
                         </li>
 
-                        <li [ngClass]="{'alternate-theme': alternar}">Toque
+                        <li [ngClass]="{'alternate-theme': alternate}">Toque
                             <button mat-mini-fab color='accent'>
                                 <i class="fas fa-sign-out-alt icons-size" ></i>
                             </button> para cerrar sesion.

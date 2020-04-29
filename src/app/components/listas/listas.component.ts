@@ -45,23 +45,23 @@ import Swal from 'sweetalert2';
 
 export class ListasComponent implements OnDestroy , DoCheck {
 
-  alternar: boolean;
+  alternate: boolean;
 
-  downPend = false;
+  showPend = false;
 
-  downTer = false;
+  showFin = false;
 
-  noCargando = false;
+  noLoading = false;
 
-  nombreUsuario: string;
+  userName: string;
 
-  listas = [];
+  lists = [];
 
-  pendientesLength: number;
+  pendingLength: number;
 
   center: google.maps.LatLngLiteral;
 
-  marcadorIndex: Geolocation;
+  markerIndex: Geolocation;
 
   getDataSubscription: Subscription;
 
@@ -73,34 +73,34 @@ export class ListasComponent implements OnDestroy , DoCheck {
 // Obtener el nombre del usuario
 
 this.fireService.getUser().subscribe(
-   (resp: any) => this.nombreUsuario = resp.users[0].providerUserInfo[0].displayName);
+   (resp: any) => this.userName = resp.users[0].providerUserInfo[0].displayName);
 
 // El ref se hace para ordenar las listas segun la fecha, por lo tanto la ultima lista creada o
 // modificada sera la primera visible.
 
-this.fireService.listas = this.fireService.firestore.collection(localStorage.getItem('id') , 
+this.fireService.lists = this.fireService.firestore.collection(localStorage.getItem('id') ,
 ref => ref.orderBy('date' , 'desc'));
 
 // Obtener la data del Cloudstore e ingresarla en el arreglo listas, tambien asigna el valor de
-// pendientesLength para los badges luego cambia el valordel noCargando para mostrar las listas
+// pendingLength para los badges luego cambia el valor del noLoading para mostrar las listas
 
 this.getDataSubscription = this.fireService.getData().subscribe( data => {
 
-  this.listas.unshift(data);
+  this.lists.unshift(data);
 
-  this.listas = this.listas[0];
+  this.lists = this.lists[0];
 
-  this.pendientesLength = this.listas.length;
+  this.pendingLength = this.lists.length;
 
-  for (let i = 0; i < this.listas.length; i++) {
+  for (let i = 0; i < this.lists.length; i++) {
 
-    if (this.listas[i].terminada === true) {
+    if (this.lists[i].finished === true) {
 
-      this.pendientesLength--;
+      this.pendingLength--;
     }
   }
 
-  this.noCargando = true;
+  this.noLoading = true;
   });
 
 // Ingresar el id dentro de la lista correspodiente, dentro del metodo ya esta la
@@ -121,11 +121,11 @@ navigator.geolocation.getCurrentPosition(position => {
   );
   }
 
-  // Cambia la propiedad alternar para el theme del Angular Material
+  // Cambia la propiedad alternate para el theme del Angular Material
 
   ngDoCheck() {
 
-    this.alternar = this.fireService.alternarService;
+    this.alternate = this.fireService.alternateService;
   }
 
   // Desuscripción del getData() y del setDocsIds()
@@ -139,18 +139,18 @@ navigator.geolocation.getCurrentPosition(position => {
 
   // Desconectarse, se maneja directamente con el id del storage mas el AuthGuard
 
-  disconect() {
+  disconnect() {
 
     localStorage.clear();
-    localStorage.setItem('theme' , (this.fireService.alternarService).toString());
+    localStorage.setItem('theme' , (this.fireService.alternateService).toString());
 
     this.route.navigateByUrl('/signIn');
   }
 
-  // Crear una lista, inicia aca y continua en el ubicarMarcador() al abrirse el modal
+  // Crear una lista, inicia aca y continua en el setMarker() al abrirse el modal
   // desde este metodo
 
-  crearLista() {
+  createList() {
 
     Swal.fire ({
     title: 'Crear nueva lista',
@@ -181,10 +181,10 @@ navigator.geolocation.getCurrentPosition(position => {
     );
    }
 
-  // Editar una lista, inicia aca y continua en el ubicarMarcador() al abrirse el modal
+  // Editar una lista, inicia aca y continua en el setMarker() al abrirse el modal
   // desde este metodo
 
-   editarLista(i: number , data) {
+   editList(i: number , data) {
 
      Swal.fire ({
      title: `Editar ${data.title}`,
@@ -202,7 +202,7 @@ navigator.geolocation.getCurrentPosition(position => {
 
       if (resp.value !== undefined) {
 
-        this.marcadorIndex = data.latLng;
+        this.markerIndex = data.latLng;
 
         localStorage.removeItem('title');
 
@@ -220,7 +220,7 @@ navigator.geolocation.getCurrentPosition(position => {
   // crear y editar lista, ambos utilizan la misma latLng y se divide con un if para el caso de crear y
   // otro para el de editar dependiendo si hay un 'title' en el storage. *Casos:
 
-    ubicarMarcador(coords) {
+    setMarker(coords) {
 
     const latLng = coords.latLng.toJSON();
 
@@ -228,7 +228,7 @@ navigator.geolocation.getCurrentPosition(position => {
 
     $('#modalMap').modal('hide') ;
 
-    // *Crear: se ejecuta el setLista() y  recibe el title del localstorage, el latLng del click en el
+    // *Crear: se ejecuta el setList() y  recibe el title del localstorage, el latLng del click en el
     // mapa y el date instanciado justo antes.
 
     if (localStorage.getItem('title')) {
@@ -239,27 +239,27 @@ navigator.geolocation.getCurrentPosition(position => {
 
       const date = Number(new Date().getTime());
 
-      this.fireService.setLista( title, latLng , date);
+      this.fireService.setList( title, latLng , date);
 
-      // *Editar: se ejecuta el editLista(), marcador undefined para evitar errores en consola, listaId
+      // *Editar: se ejecuta el editList(), marcador undefined para evitar errores en consola, listId
       // obtenida del arreglo listas, title del storage, date es nuevo y latLng al clickear en el mapa,
       // luego se hace un splice en las listas para actualizar.
 
       } else {
 
-        this.marcadorIndex = undefined;
+        this.markerIndex = undefined;
 
         index = Number(localStorage.getItem('index'));
 
         const title = localStorage.getItem('titleEdited');
 
-        const listaId: string = this.listas[index].listaId;
+        const listId: string = this.lists[index].listId;
 
         const date = Number(new Date().getTime());
 
-        this.fireService.editLista(listaId , title , date , latLng  );
+        this.fireService.editList(listId , title , date , latLng  );
 
-        this.listas.splice(
+        this.lists.splice(
           Number(localStorage.getItem('index')), 1 ,
           {position: latLng ,
            title,
@@ -272,44 +272,44 @@ navigator.geolocation.getCurrentPosition(position => {
         }
       }
 
-      // Alternar entre lista terminada o pendiente
+      // Actualizar el valor del finished en la base de datos.
 
-  cambiarCheck(listaId: string , terminada: boolean) {
+  changeCheck(listId: string , finished: boolean) {
 
-      this.fireService.changeTerminado(listaId , terminada);
+      this.fireService.changeFinished(listId , finished);
     }
 
       // Abrir una lista, se hacen los setItem al localstorage para utilizarlos luego dentro de la
       // lista seleccionada
 
-  abrirLista(i: number , terminado: boolean) {
+  openList(i: number , finished: boolean) {
 
-    if (terminado) {
+    if (finished) {
       return;
     }
 
-    const title = this.listas[i].title;
+    const title = this.lists[i].title;
 
-    localStorage.setItem('listaId' , this.listas[i].listaId);
+    localStorage.setItem('listId' , this.lists[i].listId);
 
     localStorage.setItem('title' , title);
 
-    localStorage.setItem('latLng' , JSON.stringify(this.listas[i].latLng));
+    localStorage.setItem('latLng' , JSON.stringify(this.lists[i].latLng));
 
-    if (this.listas[i].tag !== undefined) {
-      localStorage.setItem('tag' , this.listas[i].tag);
+    if (this.lists[i].tag !== undefined) {
+      localStorage.setItem('tag' , this.lists[i].tag);
     }
 
     this.route.navigateByUrl(`${localStorage.getItem('id')}/${title}`);
       }
 
-      // Borrar una lista o todas las terminadas. El parametro i solo es enviada para borrar una sola
+      // Borrar una lista o todas las finished. El parametro i solo es enviada para borrar una sola
       // lista, de ahi la condicion para borrar todas las listas juntas. Se hace in ciclo 'for' dentro
-      // de las listas y las que esten marcadas como terminadas se borran de la base de datos y se hace
+      // de las listas y las que esten marcadas como finished se borran de la base de datos y se hace
       // un splice lo que devuelve un nuevo length de las listas entonces para no "saltearse" una lista
       // es que se le resta una iteración al index.
 
-  borrarLista(i?: number , data?) {
+  deleteList(i?: number , data?) {
 
     if (i === undefined) {
 
@@ -326,13 +326,13 @@ navigator.geolocation.getCurrentPosition(position => {
 
         if (resp.value === true) {
 
-          for (let index = 0; index < this.listas.length; index++) {
+          for (let index = 0; index < this.lists.length; index++) {
 
-            if (this.listas[index].terminada === true) {
+            if (this.lists[index].finished === true) {
 
-              this.fireService.borrarLista(this.listas[index].listaId);
+              this.fireService.deleteList(this.lists[index].listId);
 
-              this.listas.splice(index , 1);
+              this.lists.splice(index , 1);
 
               index = index - 1;
             }
@@ -342,9 +342,9 @@ navigator.geolocation.getCurrentPosition(position => {
 
     } else {
 
-      this.fireService.borrarLista(data.listaId);
+      this.fireService.deleteList(data.listId);
 
-      this.listas.splice(i , 1);
+      this.lists.splice(i , 1);
     }
   }
 }

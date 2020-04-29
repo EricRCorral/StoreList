@@ -4,7 +4,7 @@
 
         <div class="col-2">
 
-            <i class="fas fa-caret-left fa-2x" (click)="regresar()"></i>
+            <i class="fas fa-caret-left fa-2x" (click)="back()"></i>
 
         </div>
 
@@ -14,7 +14,7 @@
 
         </div>
 
-        <div class="col-3 text-center" [ngClass]="{'alternate-theme': alternar}">
+        <div class="col-3 text-center" [ngClass]="{'alternate-theme': alternate}">
 
             <button mat-mini-fab color='primary'>
 
@@ -24,11 +24,11 @@
 
             <div class="d-flex justify-content-between justify-content-md-center mt-3">
 
-                <i class="fas fa-square" id="tag0" (click)="seleccionarTag('#ffffff')"></i>
+                <i class="fas fa-square" id="tag0" (click)="selectTag('#ffffff')"></i>
 
-                <i class="fas fa-square mx-2" id="tag1" (click)="seleccionarTag('#c7c700b3')"></i>
+                <i class="fas fa-square mx-2" id="tag1" (click)="selectTag('#c7c700b3')"></i>
 
-                <i class="fas fa-square" id="tag2" (click)="seleccionarTag('#ff0000b3')"></i>
+                <i class="fas fa-square" id="tag2" (click)="selectTag('#ff0000b3')"></i>
             </div>
         </div>
     </div>
@@ -38,13 +38,13 @@
         <mat-form-field class="width-input">
 
 
-            <input class="input" autofocus matInput placeholder="Articulo" type="text" #nombre id="nombreText">
+            <input class="input" autofocus matInput placeholder="Articulo" type="text" #name id="nameText">
 
         </mat-form-field>
 
         <mat-form-field class="width-input">
 
-            <input class="input" matInput placeholder="Cantidad" type="number" #cantidad (keyup.enter)="agregarItem(nombre.value , cantidad.value , unidad.value)">
+            <input class="input" matInput placeholder="Cantidad" type="number" #quantity (keyup.enter)="createItem(name.value , quantity.value , unity.value)">
 
         </mat-form-field>
 
@@ -52,10 +52,10 @@
 
             <mat-label>Unidad</mat-label>
 
-            <mat-select #unidad>
+            <mat-select #unity>
 
-                <mat-option *ngFor="let unidad of unidades; let i=index" [value]='unidad'>
-                    {{ unidad }}
+                <mat-option *ngFor="let unity of unities; let i=index" [value]='unity'>
+                    {{ unity }}
                 </mat-option>
 
             </mat-select>
@@ -63,7 +63,7 @@
     </form>
 
 
-    <div *ngIf="!noCargando">
+    <div *ngIf="!noLoading">
 
         <div class="text-center">
 
@@ -73,22 +73,22 @@
         </div>
     </div>
 
-    <div *ngIf="noCargando">
+    <div *ngIf="noLoading">
 
         <div class="row mb-3 mx-1 align-items-center justify-content-between" *ngFor="let item of items; let i=index">
 
-            <mat-checkbox name="Terminado" [(ngModel)]="item.terminado" (change)="editarItem(i , item , 2 )">
+            <mat-checkbox name="Terminado" [(ngModel)]="item.finished" (change)="editItem(i , item , 2 )">
             </mat-checkbox>
 
-            <div class="pointer" [ngClass]="{'check': item.terminado}" (click)='editarItem(i , item , 0)'>{{ item.nombre }}</div>
+            <div class="pointer" [ngClass]="{'check': item.finished}" (click)='editItem(i , item , 0)'>{{ item.name }}</div>
 
-            <div class="pointer" [ngClass]="{'check': item.terminado}" (click)='editarItem(i , item , 1)'>{{ item.cantidad }}{{ item.unidad }}</div>
+            <div class="pointer" [ngClass]="{'check': item.finished}" (click)='editItem(i , item , 1)'>{{ item.quantity }}{{ item.unity }}</div>
 
-            <div *ngIf="item.terminado">
+            <div *ngIf="item.finished">
 
-                <div [ngClass]="{'alternate-theme': alternar}">
+                <div [ngClass]="{'alternate-theme': alternate}">
 
-                    <button mat-mini-fab color='warn' (click)='borrarItem(i ,item)'>
+                    <button mat-mini-fab color='warn' (click)='delItem(i ,item)'>
     
                             <i class="fas fa-trash icons-size"></i>
                         

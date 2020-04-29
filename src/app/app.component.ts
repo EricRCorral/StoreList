@@ -13,21 +13,23 @@ import { FirebaseService } from './services/firebase.service';
 })
 export class AppComponent {
 
-  alternar: boolean;
+  alternate: boolean;
 
   constructor(private fireService: FirebaseService) {
 
-    this.alternar = JSON.parse(localStorage.getItem('theme'));
+    this.alternate = JSON.parse(localStorage.getItem('theme'));
 
   }
 
-  cambiarTheme() {
+  // Cambia el color de la app
 
-    this.alternar = !this.alternar;
+  changeTheme() {
 
-    this.fireService.alternarService = this.alternar;
+    this.alternate = !this.alternate;
 
-    localStorage.setItem('theme' , (this.alternar).toString());
+    this.fireService.alternateService = this.alternate;
+
+    localStorage.setItem('theme' , (this.alternate).toString());
 
   }
 

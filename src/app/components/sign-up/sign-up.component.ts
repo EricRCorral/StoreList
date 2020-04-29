@@ -8,27 +8,27 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class SignUpComponent  {
 
-  errorEmail: string;
+  emailErrorMessage: string;
 
-  errorPass: string;
+  passwordErrorMessage: string;
 
-  errorNombre: string;
+  nameErrorMessage: string;
 
   constructor(private fireService: FirebaseService) { }
 
   // Metodo para crearse una cuenta con su respectivo nombre.
 
-  signUp(email?: string , password?: string , nombre?: string)  {
+  signUp(email?: string , password?: string , name?: string)  {
 
-    if (nombre.length === 0) {
+    if (name.length === 0) {
 
-      this.errorNombre = 'Nombre requerido';
+      this.nameErrorMessage = 'Nombre requerido';
 
     } else {
 
-      this.errorNombre = undefined;
+      this.nameErrorMessage = undefined;
 
-      this.fireService.newUser(email, password, nombre).subscribe(
+      this.fireService.newUser(email, password, name).subscribe(
       (resp: any) => {
 
         localStorage.setItem('idToken' , resp.idToken);
@@ -37,15 +37,15 @@ export class SignUpComponent  {
 
         localStorage.setItem('id' , resp.localId);
 
-        this.fireService.setNombre(nombre);
+        this.fireService.setName(name);
 
        } , err => {
 
         this.fireService.handleError(err);
 
-        this.errorEmail = this.fireService.errorEmail;
+        this.emailErrorMessage = this.fireService.emailError;
 
-        this.errorPass = this.fireService.errorPass;
+        this.passwordErrorMessage = this.fireService.passwordError;
         }
       ) ; }
   }

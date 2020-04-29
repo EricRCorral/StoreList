@@ -1,17 +1,17 @@
 <div class="container flipInY2">
 
-    <div class="row justify-content-between pt-3 px-3" [ngClass]="{'alternate-theme': alternar}">
+    <div class="row justify-content-between pt-3 px-3" [ngClass]="{'alternate-theme': alternate}">
 
-        <h1 class="sm-title">¡ Hola {{ nombreUsuario }} !</h1>
+        <h1 class="sm-title">¡ Hola {{ userName }} !</h1>
 
-        <button mat-mini-fab (click)='disconect()' color='accent'>
+        <button mat-mini-fab (click)='disconnect()' color='accent'>
     
                     <i  class="fas fa-sign-out-alt icons-size" ></i>
     
                 </button>
     </div>
 
-    <div *ngIf="!noCargando">
+    <div *ngIf="!noLoading">
 
         <div class="text-center">
 
@@ -21,33 +21,33 @@
         </div>
     </div>
 
-    <div class="mt-5 mb-4" *ngIf="noCargando">
+    <div class="mt-5 mb-4" *ngIf="noLoading">
 
         <div class="row justify-content-around justify-content-md-center mb-3">
 
-            <div class="d-flex justify-content-center" (click)='downPend = !downPend' data-toggle='collapse' data-target='#pendientes'>
+            <div class="d-flex justify-content-center" (click)='showPend = !showPend' data-toggle='collapse' data-target='#pending'>
 
-                <i class="fas fa-clipboard-list fa-3x mx-2" [ngClass]="{'list-icon': downPend}"></i>
+                <i class="fas fa-clipboard-list fa-3x mx-2" [ngClass]="{'list-icon': showPend}"></i>
 
-                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternar}" [matBadge]='pendientesLength'></span>
+                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternate}" [matBadge]='pendingLength'></span>
 
             </div>
 
-            <div class="margin-crear" [ngClass]="{'alternate-theme': alternar}">
+            <div class="margin-create" [ngClass]="{'alternate-theme': alternate}">
 
-                <button mat-mini-fab (click)="crearLista()" color='primary'>
+                <button mat-mini-fab (click)="createList()" color='primary'>
                             
                             <i class="fas fa-plus icons-size"></i>
                             
                         </button>
             </div>
 
-            <div class="d-flex justify-content-center" (click)='downTer = !downTer' data-toggle='collapse' data-target='#terminadas'>
+            <div class="d-flex justify-content-center" (click)='showFin = !showFin' data-toggle='collapse' data-target='#complete'>
 
 
-                <i class="fas fa-clipboard-check fa-3x mx-2" [ngClass]="{'list-icon': downTer}"></i>
+                <i class="fas fa-clipboard-check fa-3x mx-2" [ngClass]="{'list-icon': showFin}"></i>
 
-                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternar}" [matBadge]='listas.length - pendientesLength'></span>
+                <span matBadgeColor='accent' [ngClass]="{'alternate-theme': alternate}" [matBadge]='lists.length - pendingLength'></span>
 
             </div>
         </div>
@@ -56,19 +56,19 @@
 
             <div class="col-6">
 
-                <div class="collapse" id="pendientes">
+                <div class="collapse" id="pending">
 
-                    <div *ngFor="let lista of listas; let i=index">
+                    <div *ngFor="let list of lists; let i=index">
 
-                        <div *ngIf="!lista.terminada" class="d-flex justify-content-between align-items-center mx-0 my-3 ">
+                        <div *ngIf="!list.finished" class="d-flex justify-content-between align-items-center mx-0 my-3 ">
 
-                            <mat-checkbox class="pt-1" [(ngModel)]="lista.terminada" (change)='cambiarCheck(lista.listaId , lista.terminada)'></mat-checkbox>
+                            <mat-checkbox class="pt-1" [(ngModel)]="list.finished" (change)='changeCheck(list.listId , list.finished)'></mat-checkbox>
 
-                            <div class="pointer" (click)="abrirLista(i , lista.terminada)"> {{ lista.title }} <i class="fas fa-tag ml-1" [ngStyle]="{'color': lista.tag}"></i></div>
+                            <div class="pointer" (click)="openList(i , list.finished)"> {{ list.title }} <i class="fas fa-tag ml-1" [ngStyle]="{'color': list.tag}"></i></div>
 
-                            <div [ngClass]="{'alternate-theme': alternar}">
+                            <div [ngClass]="{'alternate-theme': alternate}">
 
-                                <button mat-mini-fab color='primary' (click)='editarLista(i , lista)'>
+                                <button mat-mini-fab color='primary' (click)='editList(i , list)'>
                 
                                             <i class="far fa-edit icons-size"></i>
                 
@@ -81,23 +81,23 @@
 
             <div class="col-6">
 
-                <div class="collapse" id="terminadas">
+                <div class="collapse" id="complete">
 
-                    <div *ngFor="let lista of listas; let i=index">
+                    <div *ngFor="let list of lists; let i=index">
 
-                        <div class="d-flex justify-content-between align-items-center my-3 mx-0 " *ngIf="lista.terminada">
+                        <div class="d-flex justify-content-between align-items-center my-3 mx-0 " *ngIf="list.finished">
 
-                            <div class="pt-1" [ngClass]="{'alternate-theme': alternar}">
+                            <div class="pt-1" [ngClass]="{'alternate-theme': alternate}">
 
-                                <mat-checkbox [(ngModel)]="lista.terminada" (change)='cambiarCheck(lista.listaId , lista.terminada)'></mat-checkbox>
+                                <mat-checkbox [(ngModel)]="list.finished" (change)='changeCheck(list.listId , list.finished)'></mat-checkbox>
 
                             </div>
 
-                            <div [@finished] [ngClass]="{'check': lista.terminada}" (click)="abrirLista(i , lista.terminada)"> {{ lista.title }} <i class="fas fa-tag" [ngStyle]="{'color': lista.tag}"> </i></div>
+                            <div [@finished] [ngClass]="{'check': list.finished}" (click)="openList(i , list.finished)"> {{ list.title }} <i class="fas fa-tag" [ngStyle]="{'color': list.tag}"> </i></div>
 
-                            <div [ngClass]="{'alternate-theme': alternar}">
+                            <div [ngClass]="{'alternate-theme': alternate}">
 
-                                <button mat-mini-fab color='warn' (click)='borrarLista(i ,lista)'>
+                                <button mat-mini-fab color='warn' (click)='deleteList(i ,list)'>
             
                                         <i class="fas fa-trash icons-size"></i>
                                     
@@ -106,9 +106,9 @@
                         </div>
                     </div>
 
-                    <div class="my-3 text-center" [ngClass]="{'alternate-theme': alternar}">
+                    <div class="my-3 text-center" [ngClass]="{'alternate-theme': alternate}">
 
-                        <button mat-mini-fab color='warn' (click)="borrarLista()">
+                        <button mat-mini-fab color='warn' (click)="deleteList()">
             
                                 <i class="fas fa-times-circle icons-size"></i>
             
@@ -125,18 +125,18 @@
 
             <div class="modal-content">
 
-                <google-map (mapClick)="ubicarMarcador($event)" [center]="center" width="100%">
+                <google-map (mapClick)="setMarker($event)" [center]="center" width="100%">
 
-                    <map-marker *ngIf="marcadorIndex !== undefined" [position]='marcadorIndex'></map-marker>
+                    <map-marker *ngIf="markerIndex !== undefined" [position]='markerIndex'></map-marker>
 
                 </google-map>
             </div>
         </div>
     </div>
 
-    <google-map *ngIf="noCargando" [center]="center" width="100%">
+    <google-map *ngIf="noLoading" [center]="center" width="100%">
 
-        <map-marker *ngFor="let lista of listas , let i=index" [position]="lista.latLng" [title]="lista.title" (mapClick)="abrirLista(i , lista.terminada)">
+        <map-marker *ngFor="let list of lists , let i=index" [position]="list.latLng" [title]="list.title" (mapClick)="openList(i , list.finished)">
         </map-marker>
 
     </google-map>
