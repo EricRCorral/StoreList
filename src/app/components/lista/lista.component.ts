@@ -21,7 +21,14 @@ import Swal from 'sweetalert2';
 }
 
 .width-input {
-    width: 31%;
+    width: 25%;
+}
+
+.add-btn {
+  // width: fit-content;
+  // padding: 1px 2px;
+  // border: solid black 1px;
+  // text-align: center;
 }
 
 #tag0 {

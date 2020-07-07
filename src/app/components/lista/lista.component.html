@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <form class="d-flex justify-content-between">
+    <form class="d-flex justify-content-between align-items-center">
 
         <mat-form-field class="width-input">
 
@@ -60,6 +60,10 @@
 
             </mat-select>
         </mat-form-field>
+
+        <div [ngClass]="{'alternate-theme': alternate}">
+            <button mat-mini-fab  color='primary' (click)="createItem(name.value , quantity.value , unity.value)"><i class="fas fa-plus"></i></button>
+        </div>
     </form>
 
 

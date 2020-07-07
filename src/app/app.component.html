@@ -27,10 +27,10 @@
                     <h4>¿Para que es esta app?</h4>
 
                     <p>
-                        Para organizar sus compras.
+                        Para organizar sus compras. Coloca la ubicación de la tienda y luego le agrega productos.
                     </p>
 
-                    <h4>¿Como se utiliza?</h4>
+                    <h4>¿Cómo se utiliza?</h4>
 
                     <p>
                         Luego de ingresar con su cuenta, siga los siguientes pasos:
@@ -46,9 +46,9 @@
 
                         <li>Seleccione la ubicación del mismo.</li>
 
-                        <li class="my-2">Dentro de la lista podrá colocar el nombre del articulo, la cantidad y unidad. Para insertarlo toque enter dentro de la entrada de la cantidad.</li>
+                        <li class="my-2" [ngClass]="{'alternate-theme': alternate}">Dentro de la lista podrá colocar el nombre del articulo, la cantidad y unidad. Para insertarlo toque <button mat-mini-fab class="px-1" color='primary'><i class="fas fa-plus icons-size"></i></button></li>
 
-                        <li>Para modificar el nombre o la cantidad toque encima de alguno de ellos.</li>
+                        <li>Para modificar el nombre o la cantidad toquelo.</li>
 
                         <li class="my-2">Para borrar un articulo toque
                             <mat-checkbox class="px-1"></mat-checkbox> y luego
